@@ -16,13 +16,13 @@ jobs:
         include:
           - os: windows-latest
             qt_arch: win64_msvc2019_64
-            output_name: WaveConv-Windows
+            output_name: BasslineAnalyser-Windows
           - os: macos-latest
             qt_arch: clang_64
-            output_name: WaveConv-MacOS
+            output_name: BasslineAnalyser-MacOS
           - os: ubuntu-22.04
             qt_arch: gcc_64
-            output_name: WaveConv-Linux
+            output_name: BasslineAnalyser-Linux
 
     steps:
     - name: Checkout repository
@@ -49,20 +49,20 @@ jobs:
     - name: Build Project
       run: cmake --build build --config Release
 
-    # --- WINDOWS DEPLOY ---
+    # --- WINDOWS DEPLOY (Fixed Name) ---
     - name: Deploy Windows
       if: runner.os == 'Windows'
       shell: pwsh
       run: |
-        windeployqt build/Release/WaveConv.exe
+        windeployqt build/Release/BasslineAnalyser.exe
 
-    # --- MACOS DEPLOY ---
+    # --- MACOS DEPLOY (Fixed Name) ---
     - name: Deploy MacOS
       if: runner.os == 'macOS'
       run: |
-        macdeployqt build/WaveConv.app -dmg
+        macdeployqt build/BasslineAnalyser.app -dmg
 
-    # --- LINUX DEPLOY ---
+    # --- LINUX DEPLOY (Fixed Name) ---
     - name: Deploy Linux
       if: runner.os == 'Linux'
       run: |
@@ -70,15 +70,14 @@ jobs:
         wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
         chmod a+x linuxdeployqt-continuous-x86_64.AppImage
         
-        # 2. Create the metadata files INSIDE the build directory
-        # The Categories=Utility; line is critical to satisfy the error you saw
-        echo -e "[Desktop Entry]\nType=Application\nName=WaveConv\nExec=WaveConv\nIcon=icon\nCategories=Utility;" > build/WaveConv.desktop
+        # 2. Create the metadata files (Fixed Name and Exec)
+        echo -e "[Desktop Entry]\nType=Application\nName=BasslineAnalyser\nExec=BasslineAnalyser\nIcon=icon\nCategories=Utility;" > build/BasslineAnalyser.desktop
         touch build/icon.png
         
         # 3. Run deployment
-        export OUTPUT=WaveConv-x86_64.AppImage
+        export OUTPUT=BasslineAnalyser-x86_64.AppImage
         export IGNORE_LINUXDEPLOYQT_ERRORS=1
-        ./linuxdeployqt-continuous-x86_64.AppImage build/WaveConv.desktop -appimage
+        ./linuxdeployqt-continuous-x86_64.AppImage build/BasslineAnalyser.desktop -appimage
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
