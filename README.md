@@ -6,7 +6,7 @@ A Qt-based application for analysing low frequency audio and detecting bass note
 ## Features
 * Visualises waveform data.
 * Performs FFT analysis to detect pitch (C2, F1, etc.).
-* Safe playback of 16-bit, 24-bit, and 32-bit Float WAV files.
+* Not working with all .wav formats yet.
 
 ## Third-Party Libraries
 This project uses the following open-source libraries:
