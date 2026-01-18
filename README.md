@@ -1,12 +1,15 @@
 WIP
 
 # Bassline Analyser
-A Qt-based application for analysing low frequency audio and detecting bass notes.
+A Qt-based application for analysing low frequency audio and detecting / transcribing bass notes to enter into a 16 step sequencer.
 
 ## Features
 * Visualises waveform data.
 * Performs FFT analysis to detect pitch (C2, F1, etc.).
 * Not working with all .wav formats yet.
+
+## Future Features
+* Low pass filter.
 
 ## Third-Party Libraries
 This project uses the following open-source libraries:
