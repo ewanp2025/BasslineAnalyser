@@ -411,7 +411,7 @@ void MainWindow::generateSpectrogram()
 
     kiss_fft_cfg cfg = kiss_fft_alloc(fftSize, 0, NULL, NULL);
     std::vector<kiss_fft_cpx> in(fftSize);
-    std::vector<kiss_fft_cpx> out(fftSize)
+    std::vector<kiss_fft_cpx> out(fftSize);
 
     for (int t = 0; t < timeSteps; ++t) {
         int startSample = t * (fftSize - overlap);
@@ -546,4 +546,5 @@ bool MainWindow::loadWavFile(const QString &fileName)
     }
     return foundData;
 }
+
 
