@@ -360,7 +360,8 @@ void MainWindow::analyseSteps()
 
     const int N_FFT = 8192;
     kiss_fft_cfg cfg = kiss_fft_alloc(N_FFT, 0, NULL, NULL);
-    kiss_fft_cpx in[N_FFT], out[N_FFT];
+    std::vector<kiss_fft_cpx> in(N_FFT);
+    std::vector<kiss_fft_cpx> out(N_FFT);
 
     for (int i=0; i<m_numSteps; ++i) {
         int startIdx = m_loopStartSample + floor(i * m_stepSize);
@@ -374,7 +375,7 @@ void MainWindow::analyseSteps()
                 in[k].r = 0; in[k].i = 0;
             }
         }
-        kiss_fft(cfg, in, out);
+        kiss_fft(cfg, in.data(), out.data());
         float maxMag = 0; int maxIdx = 0;
         int startBin = 30 * N_FFT / m_sampleRate;
         int endBin = 500 * N_FFT / m_sampleRate;
@@ -409,7 +410,8 @@ void MainWindow::generateSpectrogram()
     m_spectrogram->data()->setRange(QCPRange(0, (double)nSamples/m_sampleRate), QCPRange(0, m_sampleRate/2));
 
     kiss_fft_cfg cfg = kiss_fft_alloc(fftSize, 0, NULL, NULL);
-    kiss_fft_cpx in[fftSize], out[fftSize];
+    std::vector<kiss_fft_cpx> in(fftSize);
+    std::vector<kiss_fft_cpx> out(fftSize)
 
     for (int t = 0; t < timeSteps; ++t) {
         int startSample = t * (fftSize - overlap);
@@ -419,7 +421,7 @@ void MainWindow::generateSpectrogram()
                 in[i].r = m_audioData[startSample + i] * win; in[i].i = 0;
             } else { in[i].r = 0; in[i].i = 0; }
         }
-        kiss_fft(cfg, in, out);
+        kiss_fft(cfg, in.data(), out.data());
         for (int f = 0; f < freqBins; ++f) {
             double mag = sqrt(out[f].r * out[f].r + out[f].i * out[f].i);
             double db = 20 * log10(mag + 1e-6);
@@ -544,3 +546,4 @@ bool MainWindow::loadWavFile(const QString &fileName)
     }
     return foundData;
 }
+
