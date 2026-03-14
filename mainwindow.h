@@ -42,15 +42,21 @@ private slots:
     void startPlayback();
     void stopPlayback();
     void updateTracker();
+    void runFullAnalysis();
 
-    // UI Slots
+    void onBassMaxFreqChanged(int value);
+
     void onThresholdChanged(int value);
     void onLoopSliderChanged();
-    void calculateBPM(); // Tab 3
+    void calculateBPM();
+    void analyseChords();
+
+    void exportBasslineLMMS();
+    void exportChordLMMS();
 
 private:
-    // --- UI ELEMENTS ---
     QTabWidget *m_tabs;
+    QTimer *m_analysisTimer;
 
     // --- TAB 1: ANALYSER ---
     QCustomPlot *m_plot;
@@ -60,7 +66,6 @@ private:
     QSlider *m_thresholdSlider;
     QLabel *m_thresholdLabel;
 
-    // Loop Controls
     QSlider *m_loopStartSlider;
     QSlider *m_loopEndSlider;
     QLabel *m_lblLoopStart;
@@ -68,6 +73,9 @@ private:
     QCPItemLine *m_lineStart;
     QCPItemLine *m_lineEnd;
     std::vector<QCPItemLine*> m_stepLines;
+    QSlider *m_bassMaxFreqSlider;
+    QLabel *m_bassMaxFreqLabel;
+    int m_bassMaxFreq = 500;
 
     // --- TAB 2: SPECTROGRAM ---
     QCustomPlot *m_spectrogramPlot;
@@ -77,6 +85,16 @@ private:
     // --- TAB 3: ENERGY / BPM ---
     QCustomPlot *m_energyPlot;
     QLabel *m_bpmLabel;
+
+    // --- TAB 4: CHORD ---
+    QString identifyChord(const std::vector<int>& midiNotes);
+    int freqToMidi(float freq);
+    QSpinBox *m_chordMinFreq;
+    QSpinBox *m_chordMaxFreq;
+    QTableWidget *m_chordTable;
+    QCustomPlot *m_chordSpectrumPlot;
+    QSpinBox *m_notchFreq;
+    QSpinBox *m_notchWidth;
 
     // --- DATA STATE ---
     int m_loopStartSample = 0;
@@ -99,6 +117,7 @@ private:
     void initAnalyserTab();
     void initSpectrogramTab();
     void initEnergyTab();
+    void initChordTab();
 
 
     // --- HELPERS ---
@@ -109,6 +128,9 @@ private:
 
     QString freqToNote(float freq);
     bool loadWavFile(const QString &fileName);
+
+    std::vector<int> m_basslineMidi;
+    std::vector<std::vector<int>> m_chordMidi;
 };
 
 #endif // MAINWINDOW_H
