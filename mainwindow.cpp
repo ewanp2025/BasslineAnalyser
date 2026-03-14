@@ -485,7 +485,8 @@ void MainWindow::generateSpectrogram()
 {
     if (m_audioData.empty()) return;
     int nSamples = m_audioData.size();
-    int fftSize = 1024; int overlap = 512;
+    const int fftSize = 1024; 
+    const int overlap = 512;
     int timeSteps = (nSamples - fftSize) / (fftSize - overlap);
     if (timeSteps <= 0) return;
     int freqBins = fftSize / 2;
