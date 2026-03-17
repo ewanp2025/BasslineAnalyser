@@ -22,7 +22,7 @@ This project uses the following open-source libraries:
 * **Source:** [https://www.qcustomplot.com/](https://www.qcustomplot.com/)
 
 ### KissFFT
-* **Description:** A Fast Fourier Transform library used for frequency analysis.
-* **Author:** Mark Borgerding
-* **License:** BSD-3-Clause
-* **Source:** [https://github.com/mborgerding/kissfft](https://github.com/mborgerding/kissfft)
+* **Description:** A lightweight, single-file C library used for decoding and loading audio files (WAV, MP3, FLAC) into raw PCM float data for DSP analysis.
+* **Author:** David Reid (mackron)
+* **License:** Public Domain (Unlicense) / MIT-0
+* **Source:** [https://github.com/mborgerding/kissfft](https://github.com/mborgerding/kissfft)](https://github.com/mackron/miniaudio)
